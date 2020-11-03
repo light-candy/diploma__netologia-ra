@@ -1,25 +1,39 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Main } from './components/Main';
+import { Catalog } from './components/Catalog';
+import { Search } from './components/Search';
+import { ProductPage } from './components/ProductPage';
+import { About } from './components/About';
+import { Contacts } from './components/Contacts';
+import { ConnectedCart } from './components/Cart';
+import { Menu } from './components/Menu';
+import { Footer } from './components/Footer';
+import { Layout } from './components/Layout';
+import { NotFound } from './components/NotFound';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Menu />
+      <Layout>
+        <Switch>
+          <Route path="/" exact component={Main} />
+          <Route path="/catalog" exact>
+            <Catalog>
+              <Search />
+            </Catalog>
+          </Route>
+          <Route path="/catalog/:id" component={ProductPage} />
+          <Route path="/about" component={About} />
+          <Route path="/contacts" component={Contacts} />
+          <Route path="/cart" component={ConnectedCart} />
+          <Route path="*" component={NotFound} />
+        </Switch>
+      </Layout>
+      <Footer />
+    </Router>
   );
 }
 
