@@ -9,16 +9,16 @@ export function Search() {
   const onChange = (event) => {
     dispatch(changeSearchField(event.target.value));
   };
-  const onBlur = (event) => {
-    dispatch(startSearch(search))
+  const onSearch = (event) => {
+    event.preventDefault();
+    dispatch(startSearch(search));
   };
 
   return (
-    <form className="catalog-search-form form-inline">
+    <form className="catalog-search-form form-inline" onSubmit={(event) => onSearch(event)}>
       <input
         className="form-control"
         onChange={onChange}
-        onBlur={onBlur}
         placeholder="Поиск"
         value={search}
       />

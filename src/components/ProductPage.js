@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import { Loader } from './Loader';
 import { ErrorAlert } from './ErrorAlert';
+import placeholder from '../img/placeholder.jpg';
 import {
   fetchProductRequest,
   fetchProductSuccess,
@@ -15,7 +16,7 @@ import {
 export const fetchProduct = async (id, dispatch) => {
   try {
     dispatch(fetchProductRequest());
-    const response = await fetch(`http://localhost:7070/api/items/${id}`);
+    const response = await fetch(`${process.env.REACT_APP_API_ENDPOINT}/items/${id}`);
     if (!response.ok) {
       throw new Error(response.statusText);
     }
@@ -75,6 +76,12 @@ export function ProductPage() {
     history.push('/cart');
   };
 
+  const onImageError = (event) => {
+    if (event.target.src !== placeholder) {
+      event.target.src = placeholder;
+    }
+  };
+
   return (
     (error) ? <ErrorAlert onRetry={() => fetchProduct(id, dispatch)} /> :
       <section className="catalog-item">
@@ -82,7 +89,12 @@ export function ProductPage() {
           <h2 className="text-center">{product.title}</h2>
           <div className="row">
             <div className="col-5">
-              <img src={product.images ? product.images[0] : ''} className="img-fluid" alt="" />
+              <img
+                src={product.images ? product.images[0] : ''}
+                className="img-fluid"
+                alt={product.title}
+                onError={(event) => onImageError(event)}
+              />
             </div>
             <div className="col-7">
               <table className="table table-bordered">

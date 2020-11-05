@@ -36,7 +36,7 @@ export const fetchProducts = async (dispatch, api) => {
 export const fetchCategories = async (dispatch) => {
   try {
     dispatch(fetchCategoriesRequest());
-    const response = await fetch('http://localhost:7070/api/categories');
+    const response = await fetch(`${process.env.REACT_APP_API_ENDPOINT}/categories`);
     if (!response.ok) {
       throw new Error(response.statusText);
     }
@@ -82,7 +82,7 @@ export function Catalog(props) {
   const offsetParam = new URLSearchParams({ offset: products.length });
   const searchParam = new URLSearchParams({ q: searchWord });
   const categoryParam = new URLSearchParams({ categoryId: category });
-  const api = 'http://localhost:7070/api/items' +  '?' + searchParam +  '&' + categoryParam;
+  const api = `${process.env.REACT_APP_API_ENDPOINT}/items` +  '?' + searchParam +  '&' + categoryParam;
 
   useEffect(() => {
     fetchProducts(dispatch, api);

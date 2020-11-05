@@ -50,7 +50,7 @@ export function Cart(props) {
   const sendOrder = async () => {
     try {
       dispatch(sendOrderRequest());
-      const response = await fetch('http://localhost:7070/api/order', {
+      const response = await fetch(`${process.env.REACT_APP_API_ENDPOINT}/order`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

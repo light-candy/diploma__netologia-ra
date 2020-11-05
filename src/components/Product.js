@@ -1,6 +1,7 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 import { Link } from 'react-router-dom';
+import placeholder from '../img/placeholder.jpg';
 
 export function Product(props) {
   const {
@@ -9,10 +10,22 @@ export function Product(props) {
     price,
     id
   } = props;
+
+  const onImageError = (event) => {
+    if (event.target.src !== placeholder) {
+      event.target.src = placeholder;
+    }
+  };
+
   return (
     <div className="col-4">
       <div className="card catalog-item-card">
-        <img src={images[0]} className="card-img-top img-fluid" alt={title} />
+        <img
+          src={images[0]}
+          className="card-img-top img-fluid"
+          alt={title}
+          onError={(event) => onImageError(event)}
+        />
         <div className="card-body">
           <p className="card-text">{title}</p>
           <p className="card-text">{price} руб.</p>

@@ -68,7 +68,10 @@ export function Menu() {
                     </div>
                   </Link>
                 </div>
-                {isSearchOpen ? <form className="header-controls-search-form form-inline">
+                {isSearchOpen ? <form
+                  className="header-controls-search-form form-inline"
+                  onSubmit={(event) => onSearch(event)}
+                >
                   <input
                     onChange={onChange}
                     value={search}
